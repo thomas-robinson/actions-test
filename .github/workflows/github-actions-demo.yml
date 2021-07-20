@@ -17,6 +17,7 @@ jobs:
       - name: Snoozing for 5 seconds
         run: sleep 5
       - run: echo "🍏 This job's status is ${{ job.status }}."
+...
 name: Run AM4 on Cloud
 on: [push]
 jobs:
