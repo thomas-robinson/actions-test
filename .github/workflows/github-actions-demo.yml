@@ -17,15 +17,11 @@ jobs:
       - name: Snoozing for 5 seconds
         run: sleep 5
       - run: echo "🍏 This job's status is ${{ job.status }}."
-...
-name: Run AM4 on Cloud
-on: [push]
-jobs:
   Launch:
-          runs-on: [self-hosted, pw-platform]
-          steps:
-                  - name: Spinning up cluster
-                    run: /home/Thomas.Robinson/pw/storage/pw_api_python/startClusters.py
-                  - name: Turn off cluster
-                    run: /home/Thomas.Robinson/pw/storage/pw_api_python/stopClusters.py
+    runs-on: [self-hosted, pw-platform]
+    steps:
+      - name: Spinning up cluster
+        run: /home/Thomas.Robinson/pw/storage/pw_api_python/startClusters.py
+      - name: Turn off cluster
+        run: /home/Thomas.Robinson/pw/storage/pw_api_python/stopClusters.py
 
