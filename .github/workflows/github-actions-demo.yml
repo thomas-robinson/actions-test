@@ -1,5 +1,9 @@
 name: GitHub Actions Demo
-on: [push]
+on:
+  push:
+    tags:
+      - '*alpha*'
+      - '*beta*'
 jobs:
   Explore-GitHub-Actions:
     runs-on: [self-hosted]
@@ -17,9 +21,4 @@ jobs:
       - name: Snoozing for 5 seconds
         run: sleep 5
       - run: echo "🍏 This job's status is ${{ job.status }}."
-  Launch:
-    runs-on: [self-hosted, pw-platform]
-    steps:
-      - name: Spinning up cluster
-        run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMStestStartClusters.py azcluster_noaa
 
