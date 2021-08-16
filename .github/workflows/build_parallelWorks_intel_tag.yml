@@ -1,0 +1,31 @@
+name: Build testing libFMS with intel
+  
+on: 
+   push:
+        tags:
+             - '*alpha*'
+             - '*beta*'
+jobs:
+     intel18Build:
+           runs-on: [self-hosted, pw-platform]
+           steps:
+                - name: Spinning up cluster
+                  run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMStestStartClusters.py azcluster_noaa
+     intel21Build:
+           runs-on: [self-hosted, pw-platform]
+           steps:
+                - name: Spinning up cluster
+                  run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMSintel21StartClusters.py azcluster_noaa
+     AM4regression:
+           runs-on: [self-hosted, pw-platform]
+           steps:
+                - name: Spinning up cluster
+                  run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/AM4_intel21StartClusters.py azcluster_noaa
+     ShutDownCluster:
+           if: always()
+           needs: [intel18Build, intel21Build, AM4regression]
+           runs-on: [self-hosted, pw-platform]
+           steps:
+                - name: Turn off cluster
+                  run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/stopClusters.py azcluster_noaa
+
