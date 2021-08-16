@@ -6,26 +6,30 @@ on:
              - '*alpha*'
              - '*beta*'
 jobs:
-     intel18Build:
-           runs-on: [self-hosted, pw-platform]
-           steps:
-                - name: Spinning up cluster
-                  run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMStestStartClusters.py azcluster_noaa
-     intel21Build:
-           runs-on: [self-hosted, pw-platform]
-           steps:
-                - name: Spinning up cluster
-                  run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMSintel21StartClusters.py azcluster_noaa
-     AM4regression:
-           runs-on: [self-hosted, pw-platform]
-           steps:
-                - name: Spinning up cluster
-                  run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/AM4_intel21StartClusters.py azcluster_noaa
-     ShutDownCluster:
-           if: always()
-           needs: [intel18Build, intel21Build, AM4regression]
-           runs-on: [self-hosted, pw-platform]
-           steps:
+   parallelWorks:
+    runs-on: [self-hosted, pw-platform]
+    strategy: 
+      matrix:
+        include:
+                - runname: FMS with intel8
+                  runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMStestStartClusters.py azcluster_noaa
+                - runname: FMS with intel 2021 container
+                  runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMSintel21StartClusters.py azcluster_noaa
+                - runname: AM4 with intel 2021 container
+                  runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/AM4_intel21StartClusters.py azcluster_noaa
+    steps:
+                - name: Running intel CI matrix
+                  env:
+                          RUNNAME: ${{ matrix.runname }}
+                          RUNSCRIPT: ${{ matrix.runscript }}
+                  run:
+                          - echo $RUNNAME 
+                            $RUNSCRIPT
+
+   ShutDownCluster:
+    if: always()
+    needs: [parallelWorks]
+    steps:
                 - name: Turn off cluster
                   run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/stopClusters.py azcluster_noaa
 
