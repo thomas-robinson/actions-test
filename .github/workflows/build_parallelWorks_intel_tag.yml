@@ -8,7 +8,8 @@ on:
 jobs:
    parallelWorks:
     runs-on: [self-hosted, pw-platform]
-    strategy: 
+    strategy:
+      max-parallel: 3
       matrix:
         include:
                 - runname: FMS with intel8
