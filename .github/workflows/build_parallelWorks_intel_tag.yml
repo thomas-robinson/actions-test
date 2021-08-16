@@ -25,7 +25,6 @@ jobs:
                           RUNNAME: ${{ matrix.runname }}
                           RUNSCRIPT: ${{ matrix.runscript }}
                   run: $RUNSCRIPT
-
   ShutDownCluster:
    runs-on: [self-hosted, pw-platform]
    if: always()
