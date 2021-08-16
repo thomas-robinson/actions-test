@@ -26,10 +26,10 @@ jobs:
                           RUNSCRIPT: ${{ matrix.runscript }}
                   run: $RUNSCRIPT
 
-#  ShutDownCluster:
-#   runs-on: [self-hosted, pw-platform]
-#   if: always()
-#   needs: [parallelWorks]
-#   steps:
-#               - name: Turn off cluster
-#                 run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/stopClusters.py azcluster_noaa
+  ShutDownCluster:
+   runs-on: [self-hosted, pw-platform]
+   if: always()
+   needs: [parallelWorks]
+   steps:
+               - name: Turn off cluster
+                 run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/stopClusters.py azcluster_noaa
