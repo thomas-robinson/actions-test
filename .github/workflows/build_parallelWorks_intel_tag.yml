@@ -17,8 +17,6 @@ jobs:
                   runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMStestStartClusters.py azcluster_noaa
                 - runname: FMS with intel 2021 container
                   runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMSintel21StartClusters.py azcluster_noaa
-                - runname: AM4 with intel 2021 container
-                  runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/AM4_intel21StartClusters.py azcluster_noaa
     steps:
                 - name: Running intel CI matrix
                   env:
