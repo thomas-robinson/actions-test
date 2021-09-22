@@ -10,7 +10,7 @@ jobs:
       matrix:
         include:
                 - runname: Info checking
-                  runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/ARGstartClusters.py $GITHUB_SHA
+                  runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/ARGstartClusters.py $GITHUB_REF
 #       include:
 #               - runname: FMS with intel8
 #                 runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMStestStartClusters.py azcluster_noaa
