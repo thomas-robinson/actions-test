@@ -1,6 +1,7 @@
 name: Build testing libFMS with intel
   
-on: 
+on:
+   pull_request: main 
    push:
         tags:
              - '*alpha*'
@@ -13,27 +14,30 @@ jobs:
       max-parallel: 3
       matrix:
         include:
-                - runname: FMS with intel8
-                  runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMStestStartClusters.py azcluster_noaa
-                - runname: FMS with intel 2021 container
-                  runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMSintel21StartClusters.py azcluster_noaa_two
+                - runname: Info checking
+                  runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/infoCheckStartClusters.py azcluster_noaa ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY} ${GITHUB_SHA}
+#       include:
+#               - runname: FMS with intel8
+#                 runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMStestStartClusters.py azcluster_noaa
+#               - runname: FMS with intel 2021 container
+#                 runscript: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/FMSintel21StartClusters.py azcluster_noaa_two
     steps:
                 - name: Running intel CI matrix
                   env:
                           RUNNAME: ${{ matrix.runname }}
                           RUNSCRIPT: ${{ matrix.runscript }}
                   run: $RUNSCRIPT
-   ShutDownCluster:
-    runs-on: [self-hosted, pw-platform]
-    if: always()
-    needs: [parallelWorks]
-    strategy:
-      matrix:
-        include:
-                - cluster: azcluster_noaa
-                - cluster: azcluster_noaa_two
-    steps:
-                - name: Turn off cluster
-                  env:
-                          CLUSTER: ${{ matrix.cluster }}
-                  run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/stopClusters.py $CLUSTER
+#  ShutDownCluster:
+#   runs-on: [self-hosted, pw-platform]
+#   if: always()
+#   needs: [parallelWorks]
+#   strategy:
+#     matrix:
+#       include:
+#               - cluster: azcluster_noaa
+#               - cluster: azcluster_noaa_two
+#   steps:
+#               - name: Turn off cluster
+#                 env:
+#                         CLUSTER: ${{ matrix.cluster }}
+#                 run: python3 /home/Thomas.Robinson/pw/storage/pw_api_python/stopClusters.py $CLUSTER
