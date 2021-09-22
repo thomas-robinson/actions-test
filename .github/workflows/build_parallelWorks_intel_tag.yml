@@ -1,11 +1,6 @@
 name: Build testing libFMS with intel
   
-on:
-   - pull_request: main 
-   - push:
-        tags:
-             - '*alpha*'
-             - '*beta*'
+on: [pull_request]
 jobs:
    parallelWorks:
     runs-on: [self-hosted, pw-platform]
